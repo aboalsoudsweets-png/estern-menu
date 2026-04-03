@@ -72,7 +72,7 @@ const drinks = [
   {
     id: "2",
     nameAr: "صحن اسطنبولية",
-    nameEn: " نوع خشنة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
+    nameEn: "",
     price: 100 ,
     category: "konafa",
     image: "2000.jpg",
@@ -477,39 +477,31 @@ const drinks = [
   }
 ];
 
-// ========== STATE MANAGEMENT ==========
+// ========== STATE ==========
 const state = {
-  cart: JSON.parse(localStorage.getItem("cart")) || [],
   currentFilter: "none",
-  selectedDrink: null,
-  selectedWeight: 1
+  selectedDrink: null
 };
 
-// ========== DOM ELEMENTS ==========
+// ========== DOM ==========
 const DOM = {
   loadingScreen: document.getElementById("loading-screen"),
   navbar: document.getElementById("navbar"),
   drinksGrid: document.getElementById("drinks-grid"),
   filterBtns: document.querySelectorAll(".filter-btn"),
   modalOverlay: document.getElementById("modal-overlay"),
-  cartIconWrap: document.getElementById("cart-icon-wrap"),
-  cartCount: document.getElementById("cart-count"),
   toast: document.getElementById("toast"),
-  modalClose: document.getElementById("modal-close"),
-  orderBtn: document.getElementById("order-btn"),
-  weightModalOverlay: document.getElementById("weight-modal-overlay"),
-  weightModalClose: document.getElementById("weight-modal-close")
+  modalClose: document.getElementById("modal-close")
 };
 
-// ========== INITIALIZATION ==========
+// ========== INIT ==========
 document.addEventListener("DOMContentLoaded", () => {
   renderDrinks();
   setupEventListeners();
   hideLoadingScreen();
-  updateCartUI();
 });
 
-// ========== LOADING SCREEN ==========
+// ========== LOADING ==========
 function hideLoadingScreen() {
   setTimeout(() => {
     DOM.loadingScreen.classList.add("fade-out");
@@ -519,7 +511,7 @@ function hideLoadingScreen() {
   }, 2000);
 }
 
-// ========== NAVBAR SCROLL EFFECT ==========
+// ========== NAVBAR SCROLL ==========
 window.addEventListener("scroll", () => {
   if (window.scrollY > 50) {
     DOM.navbar.classList.add("scrolled");
@@ -528,12 +520,7 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// ========== CHECK IF ITEM IS PLATE ==========
-function isPlateItem(drink) {
-  return drink.nameAr.includes("صحن");
-}
-
-// ========== FILTER FUNCTIONALITY ==========
+// ========== FILTERS ==========
 const baqlawaTypes = [
   { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
@@ -593,7 +580,7 @@ function displayFilteredDrinks(data) {
   });
 }
 
-// ========== RENDER DRINKS ==========
+// ========== RENDER ==========
 function renderDrinks() {
   if (state.currentFilter === "none") {
     DOM.drinksGrid.innerHTML = "";
@@ -620,38 +607,26 @@ function renderDrinks() {
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
-  
-  const cartItem = state.cart.find(item => item.id === drink.id);
-  const qty = cartItem ? cartItem.quantity : 0;
 
   card.innerHTML = `
-    <div class="card-img-wrap">
+    <div class="card-img-wrap" onclick="openModal(this, '${drink.id}')">
       <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
       <div class="card-overlay"></div>
-      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
     </div>
     <div class="card-body" style="padding: 12px;">
-      <div class="card-row" style="margin-bottom: 8px;">
-        <div style="text-align: right; width: 100%;">
-          <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
-          
-          <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
-            ${drink.desc || ''}
-          </div>
+      <div style="text-align: right; width: 100%;">
+        <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
+        
+        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
+          ${drink.desc || ''}
         </div>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+      <div style="display: flex; justify-content: center; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
         <div class="card-price" style="margin: 0;">
-          <strong style="color: #d4af37; font-size: 1.2rem;">${drink.price}</strong>
-          <small style="color: #d4af37;">ج.م</small>
+          <strong style="color: #d4af37; font-size: 1.3rem;">${drink.price}</strong>
+          <small style="color: #d4af37; font-size: 0.8rem;"> ج.م</small>
         </div>
-        
-        <button class="quick-add-btn" 
-                onclick="handleQuickAdd(event, '${drink.id}')" 
-                style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
-        </button>
       </div>
     </div>
   `;
@@ -659,135 +634,11 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// ========== WEIGHT MODAL ==========
-function openWeightModal(drink) {
-  state.selectedDrink = drink;
-  state.selectedWeight = 1;
-  
-  const weightModalOverlay = document.getElementById("weight-modal-overlay");
-  const weightButtons = document.querySelectorAll(".weight-btn");
-  
-  weightButtons.forEach(btn => {
-    btn.style.background = "#444";
-    btn.style.color = "white";
-  });
-  
-  weightButtons[0].style.background = "#d4af37";
-  weightButtons[0].style.color = "#000";
-  
-  weightModalOverlay.classList.remove("hidden");
-  weightModalOverlay.classList.add("open");
-  
-  updateWeightPrice(drink, 1);
-}
-
-function closeWeightModal() {
-  DOM.weightModalOverlay.classList.remove("open");
-  DOM.weightModalOverlay.classList.add("closing");
-  
-  setTimeout(() => {
-    DOM.weightModalOverlay.classList.add("hidden");
-    DOM.weightModalOverlay.classList.remove("closing");
-  }, 300);
-}
-
-function updateWeightPrice(drink, multiplier) {
-  const priceDisplay = document.getElementById("weight-display-price");
-  const newPrice = Math.round(drink.price * multiplier);
-  priceDisplay.textContent = newPrice;
-  
-  const weightButtons = document.querySelectorAll(".weight-btn");
-  weightButtons.forEach(btn => {
-    if (parseFloat(btn.dataset.multiplier) === multiplier) {
-      btn.style.background = "#d4af37";
-      btn.style.color = "#000";
-    } else {
-      btn.style.background = "#444";
-      btn.style.color = "white";
-    }
-  });
-}
-
-function selectWeight(multiplier) {
-  state.selectedWeight = multiplier;
-  if (state.selectedDrink) {
-    updateWeightPrice(state.selectedDrink, multiplier);
-  }
-}
-
-// ========== HANDLE QUICK ADD ==========
-function handleQuickAdd(event, drinkId) {
-  event.stopPropagation(); 
+// ========== MODAL ==========
+function openModal(element, drinkId) {
   const drink = drinks.find(d => d.id === drinkId);
+  if (!drink) return;
   
-  if (drink) {
-    if (isPlateItem(drink)) {
-      addToCartSimple(drink);
-    } else {
-      openWeightModal(drink);
-    }
-  }
-}
-
-function addToCartSimple(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image,
-      weight: 1
-    });
-  }
-  saveCart();
-  updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
-  renderDrinks();
-}
-
-function addToCartWithWeight() {
-  if (!state.selectedDrink) return;
-  
-  const drink = state.selectedDrink;
-  const weight = state.selectedWeight;
-  const finalPrice = Math.round(drink.price * weight);
-  
-  const existingItem = state.cart.find(item => 
-    item.id === drink.id && item.weight === weight
-  );
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: finalPrice,
-      quantity: 1,
-      image: drink.image,
-      weight: weight,
-      originalPrice: drink.price
-    });
-  }
-  
-  saveCart();
-  updateCartUI();
-  
-  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
-  showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
-  
-  closeWeightModal();
-  renderDrinks();
-}
-
-// ========== MODAL MANAGEMENT ==========
-function openModal(drink) {
   state.selectedDrink = drink;
   
   document.getElementById("modal-img").src = drink.image;
@@ -813,17 +664,7 @@ function closeModal() {
   }, 300);
 }
 
-// ========== CART MANAGEMENT ==========
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(state.cart));
-}
-
-function updateCartUI() {
-  const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  DOM.cartCount.textContent = totalItems;
-}
-
-// ========== TOAST NOTIFICATIONS ==========
+// ========== TOAST ==========
 function showToast(message) {
   DOM.toast.textContent = message;
   DOM.toast.classList.remove("hidden");
@@ -848,47 +689,9 @@ function setupEventListeners() {
     if (e.target === DOM.modalOverlay) closeModal();
   });
   
-  DOM.orderBtn.addEventListener("click", () => {
-    if (state.selectedDrink) {
-      if (isPlateItem(state.selectedDrink)) {
-        addToCartSimple(state.selectedDrink);
-        closeModal();
-      } else {
-        closeModal();
-        openWeightModal(state.selectedDrink);
-      }
-    }
-  });
-  
-  const weightModalClose = document.getElementById("weight-modal-close");
-  if (weightModalClose) {
-    weightModalClose.addEventListener("click", closeWeightModal);
-  }
-  
-  const weightModalOverlay = document.getElementById("weight-modal-overlay");
-  if (weightModalOverlay) {
-    weightModalOverlay.addEventListener("click", (e) => {
-      if (e.target === weightModalOverlay) closeWeightModal();
-    });
-  }
-  
-  const weightBtns = document.querySelectorAll(".weight-btn");
-  weightBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const multiplier = parseFloat(btn.dataset.multiplier);
-      selectWeight(multiplier);
-    });
-  });
-  
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeModal();
-      closeWeightModal();
     }
   });
-}
-
-// ========== CONFIRM WEIGHT SELECTION ==========
-function confirmWeightSelection() {
-  addToCartWithWeight();
 }
