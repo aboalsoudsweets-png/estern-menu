@@ -86,7 +86,7 @@ const drinks = [
     price: 90 ,
     category: "konafa",
     image: "2.png",
-    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي وم��شوة بالجوز",
     ingredients: []
   },
   {
@@ -524,7 +524,7 @@ window.addEventListener("scroll", () => {
 const baqlawaTypes = [
   { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
-  { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
+  { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معم��ل جوز','غريبة'] }
 ];
 
 function filterDrinks(category) {
@@ -613,19 +613,23 @@ function createDrinkCard(drink) {
       <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
       <div class="card-overlay"></div>
     </div>
-    <div class="card-body" style="padding: 12px;">
-      <div style="text-align: right; width: 100%;">
-        <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
+    <div class="card-body" style="padding: 12px; display: flex; flex-direction: column;">
+      <div style="text-align: right; width: 100%; flex: 1;">
+        <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 8px;">
+          ${drink.nameAr}
+        </div>
         
-        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
+        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; line-height: 1.3;">
           ${drink.desc || ''}
         </div>
       </div>
 
-      <div style="display: flex; justify-content: center; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-        <div class="card-price" style="margin: 0;">
-          <strong style="color: #d4af37; font-size: 1.3rem;">${drink.price}</strong>
-          <small style="color: #d4af37; font-size: 0.8rem;"> ج.م</small>
+      <div style="width: 100%; background: linear-gradient(135deg, rgba(220,20,60,0.15), rgba(212,175,55,0.1)); border: 2px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 12px; text-align: center; margin-top: 12px;">
+        <div style="color: #d4af37; font-size: 1.6rem; font-weight: 700;">
+          ${drink.price}
+        </div>
+        <div style="color: #d4af37; font-size: 0.85rem; margin-top: 4px;">
+          ج.م
         </div>
       </div>
     </div>
