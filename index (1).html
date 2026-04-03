@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABU ALSOUDE | منيو الحلويات الشرقي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div id="loading-screen">
+    <div class="loading-content">
+      <h1 class="loading-title">ABU ALSOUDE</h1>
+      <p>...جاري التحضير</p>
+    </div>
+  </div>
+
+  <nav id="navbar">
+    <div class="nav-logo"><span>ABU ALSOUDE</span></div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="cart-icon-wrap" style="position: relative; cursor: pointer;">
+        <span style="font-size: 1.5rem;">🛒</span>
+        <span id="cart-count">0</span>
+      </div>
+      <button id="theme-toggle">☀️/🌙</button>
+    </div>
+  </nav>
+
+  <section id="menu" style="padding-top: 100px;">
+    <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 20px;">
+      <button class="filter-btn " data-filter="all">الكل</button>
+      <button class="filter-btn" data-filter="coffee">قهوة</button>
+    </div>
+    <div class="drinks-grid" id="drinks-grid"></div>
+  </section>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box">
+      <img id="modal-img" src="" />
+      <div class="modal-body" dir="rtl">
+        <button class="modal-close" id="modal-close">✕</button>
+        <h2 id="modal-name-ar"></h2>
+        <p id="modal-name-en"></p>
+        <div class="modal-price-box"><span id="modal-price"></span> ج.م</div>
+        <p id="modal-desc"></p>
+        <ul id="modal-ing-list"></ul>
+        <button class="order-btn" id="order-btn">🛍 أضف للطلب</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cart-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box" style="max-width: 400px; flex-direction: column;">
+      <div class="modal-body" dir="rtl">
+        <button class="modal-close" id="cart-modal-close">✕</button>
+        <h2>🛒 سلتك</h2>
+        <div id="cart-items-list" style="margin: 20px 0;"></div>
+        <hr>
+        <p>الإجمالي: <span id="cart-total-price">0</span> ج.م</p>
+        <button class="order-btn" id="checkout-whatsapp" style="background:#25D366;">إرسال واتساب</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="script.js"></script>
+</body>
+</html>
