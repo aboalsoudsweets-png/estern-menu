@@ -145,7 +145,7 @@ const drinks = [
     id: "mishkal-fustuk",
     nameAr: "مشكل فستق حلبي",
     nameEn: "",
-    price: 2500,
+    price: 1750,
     category: "baqlawa",
     image: "7.png",
     images: [
@@ -153,10 +153,29 @@ const drinks = [
       "6.png",
       "8.png",
       "10.png",
-      "11.png",
-      "15.png"
+      "13.png",
+      "17.png"
     ],
-    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز",
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+
+  {
+    id: "mishkal-fustuk-mix",
+    nameAr: " مشكل فستق حلبي مع لوز و كاجو",
+    nameEn: "",
+    price: 1250,
+    category: "baqlawa",
+    image: "7.png",
+    images: [
+      "7.png",
+      "27.png",
+      "6.png",
+      "23.png",
+      "20.png",
+      "11.png"
+    ],
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
 
@@ -292,12 +311,12 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
  
-  // ✅ مشكل لوز حلبي
+  // ✅ مشكل لوز
   {
     id: "mishkal-loz",
-    nameAr: "مشكل لوز حلبي",
+    nameAr: "مشكل لوز",
     nameEn: "",
-    price: 2500,
+    price: 750,
     category: "baqlawa",
     image: "20.png",
     images: [
@@ -308,7 +327,7 @@ const drinks = [
       "26.png",
       "30.png"
     ],
-    desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الحلبي الممتاز",
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
 
@@ -340,7 +359,7 @@ const drinks = [
     price: 680,
     category: "baqlawa",
     image: "21.png",
-    desc: "حلوى من الكنافة على شكل دائري محشوة باللوز الحلو",
+    desc: "حلوى من الكنافة على ��كل دائري محشوة باللوز الحلو",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
@@ -475,7 +494,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505",
+    id: "505b",
     nameAr: "لوكم بندق ",
     nameEn: "",
     price: 950,
@@ -485,7 +504,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   
-  {
+    {
     id: "3000",
     nameAr: "غريبة",
     nameEn: "",
@@ -531,8 +550,8 @@ const DOM = {
   drinksGrid: document.getElementById("drinks-grid"),
   filterBtns: document.querySelectorAll(".filter-btn"),
   modalOverlay: document.getElementById("modal-overlay"),
-  modalClose: document.getElementById("modal-close"),
-  toast: document.getElementById("toast")
+  toast: document.getElementById("toast"),
+  modalClose: document.getElementById("modal-close")
 };
 
 // ========== INITIALIZATION ==========
@@ -629,7 +648,7 @@ function displayFilteredDrinks(data) {
   });
 }
 
-// ✅ دالة إنشاء كرت الكاروسيل (السعر فقط)
+// ✅ دالة إنشاء كرت الكاروسيل
 function createCarouselCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card carousel-card";
@@ -654,7 +673,6 @@ function createCarouselCard(drink) {
           ${slidesHTML}
         </div>
         
-        <!-- ✅ النقاط السفلية -->
         <div class="carousel-dots">
           ${images.map((_, i) => `
             <span class="dot ${i === 0 ? 'active' : ''}" onclick="goToImageSlide('${carouselId}', ${i})"></span>
@@ -673,7 +691,7 @@ function createCarouselCard(drink) {
         </div>
       </div>
 
-      <!-- ✅ السعر فقط (بدون زر) -->
+      <!-- ✅ السعر فقط بدون زر -->
       <div style="display: flex; justify-content: center; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
         <div class="card-price" style="margin: 0;">
           <strong style="color: #d4af37; font-size: 1.3rem;">${drink.price}</strong>
@@ -731,7 +749,7 @@ function createDrinkCard(drink) {
         </div>
       </div>
 
-      <!-- ✅ السعر فقط (بدون زر) -->
+      <!-- ✅ السعر فقط بدون زر -->
       <div style="display: flex; justify-content: center; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
         <div class="card-price" style="margin: 0;">
           <strong style="color: #d4af37; font-size: 1.3rem;">${drink.price}</strong>
@@ -744,7 +762,7 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// ✅ دالة تحريك الكاروسيل
+// ✅ تحريك الكاروسيل عند السكرول
 function changeImageSlide(carouselId, direction) {
   const track = document.getElementById(`${carouselId}-track`);
   
