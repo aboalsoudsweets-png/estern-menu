@@ -739,7 +739,7 @@ function createDrinkCard(drink) {
       <button 
         onclick="handleQuickAdd(event, '${drink.id}')"
         style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer;">
-     ${isPlateItem(drink) ? 'عرض السعر' : 'اختيار الوزن'}
+     ${isPlateItem(drink) ? '' : 'اختيار الوزن'}
       </button>
 
     </div>
