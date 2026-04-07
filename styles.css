@@ -1393,3 +1393,9 @@ footer p {
     font-weight: 700;
     color: #d4af37;
 }
+
+
+
+#show-price-btn {
+  display: none;
+}
