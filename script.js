@@ -735,7 +735,11 @@ function createDrinkCard(drink) {
 
 
 
-
+<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+      
+      <div style="color: #d4af37;">
+        <strong>${drink.price}</strong> ج.م
+      </div>
 
 
 
