@@ -1399,3 +1399,16 @@ footer p {
 #show-price-btn {
   display: none;
 }
+
+
+
+.card-img-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.card-img-slide {
+  min-width: 100%;
+  scroll-snap-align: start;
+}
