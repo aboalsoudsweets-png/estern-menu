@@ -1,4 +1,4 @@
-const defaultDrinks = [
+const drinks = [
 {
 id: "4",
 nameAr: " كنافة نابلسية",
