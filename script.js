@@ -1,5 +1,4 @@
-// ========== DATA ==========
-const drinks = [
+const defaultDrinks = [
 {
 id: "4",
 nameAr: " كنافة نابلسية",
@@ -31,7 +30,7 @@ ingredients: []
 },
 {
 id: "40055",
-nameAr: "  اسطنبولية و عربية مشكل ",
+nameAr: "  اسطنبولية و عربية مشكل",
 nameEn: "",
 price: 540,
 category: "konafa",
@@ -51,7 +50,7 @@ ingredients: []
 },
 {
 id: "504",
-nameAr: " نابلسية و عربية مشكل ",
+nameAr: "نابلسية و عربية مشكل ",
 nameEn: "",
 price: 500,
 category: "konafa",
